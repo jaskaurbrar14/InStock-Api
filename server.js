@@ -10,5 +10,5 @@ app.use(cors({ origin: CLIENT_URL }));
 app.use(express.json());
 
 app.listen(PORT, () => {
-  console.log("Listening on PORT: ${PORT}");
+  console.log(`Running at http://localhost:${PORT}`);
 });
