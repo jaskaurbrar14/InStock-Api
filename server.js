@@ -12,7 +12,7 @@ const warehouseRoutes = require('./routes/warehouse-routes');
 app.use(express.json());
 
 // all warehouse apis
-app.use('/warehouses', warehouseRoutes);
+app.use('/api/warehouses', warehouseRoutes);
 
 app.listen(PORT, () => {
   console.log(PORT);
