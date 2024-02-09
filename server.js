@@ -8,11 +8,13 @@ dotenv.config();
 const PORT = process.env.PORT || 5050;
 
 const warehouseRoutes = require('./routes/warehouse-routes');
+const inventoryRoutes = require('./routes/inventory-routes');
 
 app.use(express.json());
 
-// all warehouse apis
-app.use('/api/warehouses', warehouseRoutes);
+// all requests map here and each indivdiual route has specific apis
+app.use('/api', inventoryRoutes);
+app.use('/api', warehouseRoutes);
 
 app.listen(PORT, () => {
   console.log(PORT);
