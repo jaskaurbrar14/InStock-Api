@@ -6,9 +6,6 @@ router.get("/warehouses", warehouseController.index);
 
 //Get single Warehouse
 
-router.get(
-  "/inventories/:inventory_id/inventories/:inventory_id",
-  warehouseController.findById
-);
+router.get("/warehouse/:warehouse_id", warehouseController.singleData);
 
 module.exports = router;

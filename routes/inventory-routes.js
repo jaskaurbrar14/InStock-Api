@@ -6,3 +6,4 @@ router.get(
   "/warehouses/:warehouse_id/inventories/:inventory_id",
   inventoryController.findById
 );
+module.exports = router;

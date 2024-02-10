@@ -16,16 +16,16 @@ const singleData = async (req, res) => {
   try {
     const { warehouse_id, inventory_id } = req.params;
 
-    const warehouse = await knex("inventories")
+    const warehouse = await knex("warehouse")
       .where({
-        warehouse_id: warehouse_id,
+        inventory_id: inventory_id,
         id: warehouse_id,
       })
       .first();
 
     if (!warehouse) {
       return res.status(404).json({
-        error: `warehouse ${warehouse_id} not found for warehouse ${inventory_id}`,
+        error: `Warehouse ${warehouse_id} not found for warehouse ${inventory_id}`,
       });
     }
 
