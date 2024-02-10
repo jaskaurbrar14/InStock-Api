@@ -35,20 +35,14 @@ const createNewItem = async (req, res) => {
       error: "Missing required values in the create inventory item form",
     });
   }
-  //   next();
   try {
     await knex("warehouses").where({ id: "warehouseId" }).first();
-    // if (!checkWarehouse) {
-    //   return res.status(400).json({ error: "The warehouse doesn't exist" });
-    // }
   } catch (error) {
     res.status(400).json({ error: "The warehouse doesn't exist" });
   }
-  //   next();
   if (isNaN(quantity)) {
     return res.status(400).json({ error: "quantity must be a number value" });
   }
-  //   next();
 
   try {
     const [inventoryId] = await knex("inventories").insert({
