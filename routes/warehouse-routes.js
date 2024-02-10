@@ -8,7 +8,7 @@ router.get("/warehouses", warehouseController.index);
 
 router.get(
   "/inventories/:inventory_id/inventories/:inventory_id",
-  inventoryController.findById
+  warehouseController.findById
 );
 
 module.exports = router;
