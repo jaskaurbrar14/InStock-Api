@@ -14,6 +14,7 @@ const findById = async (req, res) => {
 
         if (!inventory) {
             return res.status(404).json({ 
+                status: 404,
                 error: `Inventory ${inventory_id} not found for warehouse ${warehouse_id}` 
             });
         }
