@@ -7,3 +7,5 @@ router.get(
   inventoryController.findById
 );
 module.exports = router;
+
+module.exports = router;
