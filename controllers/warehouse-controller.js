@@ -11,32 +11,29 @@ const index = async (_req, res) => {
   }
 };
 
-//Single Warehouse
-const singleData = async (req, res) => {
+// Get warehouse by ID
+const getSingleWarehouse = async (req, res) => {
   try {
-    const { warehouse_id, inventory_id } = req.params;
-
-    const warehouse = await knex("warehouse")
-      .where({
-        inventory_id: inventory_id,
-        id: warehouse_id,
-      })
+    const warehouse = await knex("warehouses")
+      .where({ id: req.params.id })
       .first();
 
     if (!warehouse) {
       return res.status(404).json({
-        error: `Warehouse ${warehouse_id} not found for warehouse ${inventory_id}`,
+        message: `Warehouse with ID ${req.params.id} not found`,
       });
     }
-
     res.status(200).json(warehouse);
-  } catch (err) {
-    console.error("Error fetching warehouses:", err);
-    res.status(500).json({ error: "Internal server error" });
+  } catch (error) {
+    console.error("Error retrieving warehouse data:", error);
+    res.status(500).json({
+      message: `Unable to retrieve warehouse data for warehouse with ID ${req.params.id}`,
+    });
+    console.error(error);
   }
 };
 
 module.exports = {
   index,
-  singleData,
+  getSingleWarehouse,
 };
