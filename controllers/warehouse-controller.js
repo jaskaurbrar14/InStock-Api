@@ -23,7 +23,7 @@ const remove = async (req, res) => {
       res.sendStatus(204);
     } catch (error) {
       res.status(500).json({
-        message: `Unable to delete user: ${error}`
+        message: `Unable to delete warehouse: ${error}`
       });
     }
   };
