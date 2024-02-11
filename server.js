@@ -9,12 +9,13 @@ const PORT = process.env.SERVER_PORT || 8081;
 
 const warehouseRoutes = require("./routes/warehouse-routes");
 const inventoryRoutes = require("./routes/inventory-routes");
+
 app.use(cors());
 app.use(express.json());
 
 // all requests map here and each indivdiual route has specific apis
-app.use("/inventories", inventoryRoutes);
-app.use("/warehouses", warehouseRoutes);
+app.use("/api", inventoryRoutes);
+app.use("/api", warehouseRoutes);
 
 app.listen(PORT, () => {
   console.log(PORT);
