@@ -7,10 +7,6 @@ router.get(
   inventoryController.findById
 );
 
-router.get("/", inventoryController.getInventoryList);
-// router.get("/", (req, res) => {
-//   console.log("Get request for inventory");
-//   res.send("Inventory Routes");
-// });
+router.get("/inventories", inventoryController.getInventoryList);
 
 module.exports = router;
