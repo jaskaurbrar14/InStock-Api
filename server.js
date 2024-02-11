@@ -2,7 +2,7 @@
 require("dotenv").config();
 const express = require('express');
 const app = express();
-const warehousesRoutes = require('./routes/warehouseRoutes'); 
+const warehousesRoutes = require('./routes/warehouse-routes'); 
 const cors = require("cors");
 
 app.use(cors());
@@ -12,7 +12,7 @@ app.use(express.json());
 app.use("/warehouse", warehousesRoutes);
 
 // Load the variables from .env file
-dotenv.config();
+// dotenv.config();
 
 const PORT = process.env.PORT || 5050;
 
