@@ -53,6 +53,8 @@ const createNewItem = async (req, res) => {
       status: req.body.status,
       quantity: req.body.quantity,
       created_at: Date.now(),
+
+      //   check if create date is required, because you can't handle this in edit
     });
     const createdItem = await knex("inventories")
       .where({ id: inventoryId })
@@ -63,7 +65,57 @@ const createNewItem = async (req, res) => {
   }
 };
 
+// Edit an inventory item
+const editItem = async (req, res) => {
+  const inventoryId = req.params.id;
+
+  //   All request body data needs to have validation. All values are required (non-empty)
+  try {
+    await knex("inventories").where({ id: "inventoryId" }).first();
+  } catch (error) {
+    res.status(404).json({ error: "The inventory item doesn't exist" });
+  }
+  const { item_name, description, category, status, quantity } = req.body;
+  if (!item_name || !description || !category || !status || !quantity) {
+    return res.status(400).json({
+      error: "Missing required values in the edit inventory item form",
+    });
+  }
+  const warehouseId = req.params.warehouse_id;
+  try {
+    await knex("warehouses").where({ id: "warehouseId" }).first();
+  } catch (error) {
+    res.status(400).json({ error: "The warehouse doesn't exist" });
+  }
+  if (isNaN(quantity)) {
+    return res.status(400).json({ error: "quantity must be a number value" });
+  }
+
+  try {
+    await knex("inventories")
+      .where({
+        id: inventoryId,
+        warehouse_id: warehouseId,
+      })
+      .update({
+        warehouse_id,
+        item_name,
+        description,
+        category,
+        status,
+        quantity,
+      });
+
+    const updatedItem = await knex("inventories")
+      .where({ id: inventoryId, warehouse_id: warehouseId })
+      .first();
+    res.status(200).json(updatedItem);
+  } catch (err) {
+    res.status(500).json({ err: "Internal server error" });
+  }
+};
 module.exports = {
   findById,
   createNewItem,
+  editItem,
 };
