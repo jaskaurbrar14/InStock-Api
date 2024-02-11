@@ -6,6 +6,11 @@ router.get(
   "/warehouses/:warehouse_id/inventories/:inventory_id",
   inventoryController.findById
 );
-module.exports = router;
+
+router.get("/", inventoryController.getInventory);
+router.get("/", (req, res) => {
+  console.log("Get request for inventory");
+  res.send("Inventory Routes");
+});
 
 module.exports = router;

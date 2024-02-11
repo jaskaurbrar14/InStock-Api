@@ -25,6 +25,27 @@ const findById = async (req, res) => {
   }
 };
 
+//Get list of all inventory items
+const getInventoryList = async (req, res) => {
+  try {
+    const data = await knex("inventories")
+      .join("warehouses", "inventories.warehouse_id", "=", "warehouses.id")
+      .select(
+        "inventories.id",
+        "warehouse_name",
+        "item_name",
+        "description",
+        "category",
+        "status",
+        "quantity"
+      );
+    res.status(200).json(data);
+  } catch (error) {
+    res.status(400).send(`Error retriving inventory data`);
+  }
+};
+
 module.exports = {
   findById,
+  getInventoryList,
 };

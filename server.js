@@ -13,7 +13,7 @@ app.use(cors());
 app.use(express.json());
 
 // all requests map here and each indivdiual route has specific apis
-app.use("/api", inventoryRoutes);
+app.use("/inventories", inventoryRoutes);
 app.use("/warehouses", warehouseRoutes);
 
 app.listen(PORT, () => {
