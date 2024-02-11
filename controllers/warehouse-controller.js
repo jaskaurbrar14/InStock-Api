@@ -95,7 +95,7 @@ function validatePhoneNumber(phoneNumber) {
 const getWarehouseById = async (req, res) => {
   try {
     const warehouse = await knex("warehouses")
-      .where({ id: req.params.id })
+      .where({ id: req.params.warehouse_id })
       .first();
 
     if (!warehouse) {
@@ -134,5 +134,6 @@ const remove = async (req, res) => {
 module.exports = {
   index,
   edit,
+  remove,
   getWarehouseById,
 };
