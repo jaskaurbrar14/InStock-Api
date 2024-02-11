@@ -148,7 +148,7 @@ const addWarehouse = async (req, res) => {
       
     } catch (error) {
       res.status(500).json({
-        message: `Unable to create new user: ${error}`,
+        message: `Unable to create new warehouse: ${error}`,
       });
     }
   };
