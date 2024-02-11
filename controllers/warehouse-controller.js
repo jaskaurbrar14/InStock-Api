@@ -1,7 +1,6 @@
 const validator = require('validator');
-
 const knex = require('knex')(require('../knexfile'));
-
+const emailValidator = require('validator');
 const warehouseRequiredFields = ['warehouse_name', 'address', 'city', 'country', 'contact_name', 'contact_position', 'contact_phone', 'contact_email', ];
 
 // list all warehouses
@@ -153,6 +152,7 @@ const addWarehouse = async (req, res) => {
       });
     }
   };
+  
 module.exports = {
     index,
     edit, 
