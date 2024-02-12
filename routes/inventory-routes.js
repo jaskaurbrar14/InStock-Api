@@ -1,7 +1,5 @@
 const router = require("express").Router();
-const router = require("express").Router();
 
-const inventoryController = require("../controllers/inventory-controller");
 const inventoryController = require("../controllers/inventory-controller");
 
 router.get(
