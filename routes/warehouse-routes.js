@@ -2,7 +2,7 @@ const router = require("express").Router();
 
 const warehouseController = require("../controllers/warehouse-controller");
 
-router.post("/warehouses", warehouseController.index);
+router.post("/warehouses", warehouseController.addWarehouse);
 router.get("/warehouses", warehouseController.index);
 router.get("/warehouses/:warehouse_id", warehouseController.getWarehouseById);
 router.put("/warehouses/:warehouse_id", warehouseController.edit);

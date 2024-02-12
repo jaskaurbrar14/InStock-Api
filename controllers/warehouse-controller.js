@@ -1,5 +1,4 @@
 const knex = require("knex")(require("../knexfile"));
-
 // list all warehouses
 const index = async (_req, res) => {
   try {
@@ -141,18 +140,12 @@ const addWarehouse = async (req, res) => {
           });
     }
   
-    const isValidEmail = emailValidator.isEmail(contact_email);
+
   
     const phoneRegEx = /^\+?(\d{1,3})?\s*\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/;
   
     const isValidPhoneNumber = phoneRegEx.test(contact_phone);
   
-    if (!isValidEmail || !isValidPhoneNumber) {
-      return res.status(400).send({
-        isSuccessful : false,
-        message : `Invalid email or phone number`
-      });
-    }
     const newWarehouse = {
       warehouse_name,
       address,
