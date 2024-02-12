@@ -172,6 +172,7 @@ const editItem = async (req, res) => {
 module.exports = {
   findById,
   remove,
+
   createNewItem,
   editItem,
 };
