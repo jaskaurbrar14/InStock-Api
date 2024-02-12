@@ -7,9 +7,12 @@ router.get(
   inventoryController.findById
 );
 router.post(
-  "/:warehouse_id/api/inventories",
+  "/warehouses/:warehouse_id/inventories",
   inventoryController.createNewItem
 );
-router.put("/:warehouse_id/api/inventories/:id", inventoryController.editItem);
+router.put(
+  "/warehouses/:warehouse_id/inventories/:id",
+  inventoryController.editItem
+);
 
 module.exports = router;

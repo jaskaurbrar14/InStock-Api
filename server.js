@@ -15,8 +15,7 @@ const inventoryRoutes = require("./routes/inventory-routes");
 app.use(express.json());
 
 // all requests map here and each indivdiual route has specific apis
-app.use("/warehouses", inventoryRoutes);
-// app.use("/api", inventoryRoutes);
+app.use("/api", inventoryRoutes);
 app.use("/api", warehouseRoutes);
 
 app.listen(PORT, () => {
