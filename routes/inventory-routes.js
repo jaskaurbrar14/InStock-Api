@@ -6,5 +6,13 @@ router.get(
   inventoryController.findById
 );
 router.delete("/inventories/:id", inventoryController.remove);
+router.post(
+  "/warehouses/:warehouse_id/inventories",
+  inventoryController.createNewItem
+);
+router.put(
+  "/warehouses/:warehouse_id/inventories/:id",
+  inventoryController.editItem
+);
 
 module.exports = router;
