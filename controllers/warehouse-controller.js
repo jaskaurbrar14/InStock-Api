@@ -1,5 +1,4 @@
 const knex = require("knex")(require("../knexfile"));
-
 // list all warehouses
 const index = async (_req, res) => {
   try {
@@ -12,8 +11,6 @@ const index = async (_req, res) => {
 };
 
 const validator = require("validator");
-
-//const knex = require("knex")(require("../knexfile"));
 
 const warehouseRequiredFields = [
   "warehouse_name",
@@ -104,36 +101,109 @@ const getWarehouseById = async (req, res) => {
       });
     }
     res.status(200).json(warehouse);
-  } catch (error) {
-    res.status(500).json({
-      message: `Unable to retrieve warehouse data for warehouse with ID ${req.params.id}`,
-    });
-    console.error(error);
-  }
-};
-
-const remove = async (req, res) => {
-  console.log(`Attempting to delete warehouse with ID ${req.params.id}`);
-  try {
-    const rowsDeleted = await knex("warehouses")
-      .where({ id: req.params.id })
-      .delete();
-
-    if (rowsDeleted === 0) {
-      return res
-        .status(404)
-        .json({ message: `Warehouse with ID ${req.params.id} not found` });
+    } catch (error) {
+      console.error("Error fetching warehouse by ID:", error);
+      res.status(500).json({ error: "Internal server error" });
     }
-    res.sendStatus(204);
-  } catch (error) {
-    res.status(500).json({
-      message: `Unable to delete warehouse: ${error}`,
-    });
-  }
-};
+  };
+const addWarehouse = async (req, res) => {
+    const {
+      warehouse_name,
+      address,
+      city,
+      country,
+      contact_name,
+      contact_position,
+      contact_phone,
+      contact_email,
+    } = req.body;
+  
+    const requiredFields = [
+      "warehouse_name",
+      "address",
+      "city",
+      "country",
+      "contact_name",
+      "contact_position",
+      "contact_phone",
+      "contact_email",
+    ];
+  
+    const missingField = requiredFields.filter((field) => !req.body[field]);
+  
+    if (missingField.length > 0) {
+      return res
+        .status(400)
+        .send({
+            isSuccessful : false,
+            message : `can't create new warehouse as the required fields are missing:  ${missingField}`
+          });
+    }
+  
+
+  
+    const phoneRegEx = /^\+?(\d{1,3})?\s*\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/;
+  
+    const isValidPhoneNumber = phoneRegEx.test(contact_phone);
+  
+    const newWarehouse = {
+      warehouse_name,
+      address,
+      city,
+      country,
+      contact_name,
+      contact_position,
+      contact_phone,
+      contact_email,
+    };
+    try {
+      const result = await knex("warehouses").insert(newWarehouse);
+      const newWarehouseId = result[0];
+      const createdWarehouse = await knex("warehouses").where({
+        id: newWarehouseId,
+      });
+      if(createdWarehouse && createdWarehouse!== null){
+        return res.send({
+          message: `Warehouse  was successfully created`,
+          isSuccessful: true,
+          data: createdWarehouse,
+        });
+      }else{
+        return res(500).send({
+          message: `Something went wrong`,
+          isSuccessful: false,
+        });
+      }
+      
+    } catch (error) {
+      res.status(500).json({
+        message: `Unable to create new warehouse: ${error}`,
+      });
+    }
+  };
+  const remove = async (req, res) => {
+    console.log(`Attempting to delete warehouse with ID ${req.params.id}`);
+    try {
+      const rowsDeleted = await knex("warehouses")
+        .where({ id: req.params.id })
+        .delete();
+  
+      if (rowsDeleted === 0) {
+        return res
+          .status(404)
+          .json({ message: `Warehouse with ID ${req.params.id} not found` });
+      }
+      res.sendStatus(204);
+    } catch (error) {
+      res.status(500).json({
+        message: `Unable to delete warehouse: ${error}`,
+      });
+    }
+  };
 module.exports = {
   index,
   edit,
+  addWarehouse,
   remove,
   getWarehouseById,
 };
